@@ -34,9 +34,14 @@ colors() {
 [[ -f ~/.extend.bashrc ]] && . ~/.extend.bashrc
 
 [ -r /usr/share/bash-completion/bash_completion   ] && . /usr/share/bash-completion/bash_completion
-#
-#if [ -f `which fish` ]; then
-#  /usr/bin/fish
-#  exit
-#fi
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
+if [ -f `which fish` ]; then
+  /usr/bin/fish
+  exit
+fi
 alias mydots='/usr/bin/git --git-dir=$HOME/.mydots/ --work-tree=$HOME'

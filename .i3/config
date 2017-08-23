@@ -98,7 +98,7 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # workspace back and forth (with/without active container)
-workspace_auto_back_and_forth yes
+workspace_auto_back_and_forth no
 bindsym $mod+b workspace back_and_forth
 bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
 
@@ -191,7 +191,7 @@ bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
 assign [class="Firefox"] $ws2
 assign [class="Chromium"] $ws2
 assign [class="Lollypop"] $ws3
-assign [title="Spotify"] $ws3
+assign [class="Spotify"] $ws3
 assign [class="Gthumb"] $ws4
 
 # Open specific applications in floating mode
@@ -215,7 +215,7 @@ for_window [class="Pamac-manager"] floating enable
 for_window [class="Pavucontrol"] floating enable
 for_window [class="qt5ct"] floating enable sticky enable border normal
 for_window [class="Qtconfig-qt4"] floating enable sticky enable border normal
-for_window [class="Simple-scan"] floating enable border normal
+#for_window [class="Simple-scan"] floating enable border normal
 for_window [class="(?i)System-config-printer.py"] floating enable border normal
 for_window [class="Skype"] floating enable border normal
 for_window [class="Thus"] floating enable border normal
@@ -223,7 +223,6 @@ for_window [class="Timeset-gui"] floating enable border normal
 #for_window [class="(?i)virtualbox"] floating enable border normal
 for_window [class="Xfburn"] floating enable
 for_window [class="Plank"] floating enable
-for_window [title="qpaeq"] floating enable
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
@@ -465,8 +464,8 @@ mode "$mode_gaps_outer" {
 #exec_always xcompmgr
 exec --no-startup-id /home/rnunes/bin/qpaeq-load-modules.sh
 exec_always --no-startup-id xrdb ~/.Xresources
-#exec synapse
-exec --no-startup-id /home/rnunes/bin/g610-keyboard-daemon
+exec --no-startup-id synapse
+#exec --no-startup-id /home/rnunes/bin/g610-keyboard-daemon
 #exec plank
 exec_always --no-startup-id numlockx
 exec_always --no-startup-id xset dpms 600
