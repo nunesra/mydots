@@ -34,13 +34,12 @@ bindsym $mod+Shift+q kill
 
 # start program launcher
 bindsym $mod+d exec --no-startup-id dmenu_recency -b
-bindsym $mod+Shift+d exec --no-startup-id rofi -show drun -config ~/.config/rofi.conf
+bindsym Mod4+space exec --no-startup-id rofi -show drun -config ~/.config/rofi.conf
 #bindsym $mod+Shift+d exec --no-startup-id rofi -show run -config ~/.config/rofi.conf
 # launch categorized menu
 bindsym $mod+z exec --no-startup-id morc_menu
 
 exec --no-startup-id pulseaudio
-exec --no-startup-id pa-applet
 bindsym $mod+Ctrl+m exec pavucontrol
 
 ################################################################################################
@@ -128,8 +127,8 @@ bindsym $mod+minus scratchpad show
 #navigate workspaces next / previous
 bindsym $mod+Ctrl+Right workspace next
 bindsym $mod+Ctrl+Left workspace prev
-bindsym $mod+Tab workspace next
-bindsym $mod+Shift+Tab workspace prev
+bindsym $mod+Ctrl+Tab workspace next
+bindsym $mod+Ctrl+Shift+Tab workspace prev
 
 # Workspace names
 # to display names or symbols instead of plain workspace numbers you can use
@@ -184,7 +183,7 @@ assign [class="Spotify"] $ws3
 assign [class="Gthumb"] $ws4
 
 # Open specific applications in floating mode
-for_window [title="alsamixer"] floating enable border pixel 1
+#for_window [title="alsamixer"] floating enable border pixel 1
 for_window [class="Calamares"] floating enable border normal
 for_window [class="Clipgrab"] floating enable
 for_window [title="File Transfer*"] floating enable
@@ -214,6 +213,14 @@ for_window [class="Xfburn"] floating enable
 for_window [class="Plank"] floating enable
 for_window [title="Avidemux"] floating enable border normal
 for_window [class="tint2"] floating enable border normal
+for_window [class="Simcity"] floating enable
+for_window [class="Blueberry.py"] floating enable
+for_window [class="Blueman-manager"] floating enable
+for_window [class="explorer.exe"] floating enable
+for_window [class="Origin.exe"] floating enable
+for_window [class="Qpaeq"] floating enable
+
+# to find the window class use xprop
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
@@ -280,7 +287,9 @@ exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id pamac-tray
 exec --no-startup-id clipit
-# exec --no-startup-id blueman
+exec --no-startup-id blueman-applet
+#exec --no-startup-id blueman-applet
+#exec --no-startup-id blueberry-tray
 # exec_always --no-startup-id sbxkb
 #
 # use default .config/conky/conky.conf
@@ -291,6 +300,8 @@ exec --no-startup-id clipit
 exec --no-startup-id xautolock -time 20 -locker ~/bin/g610-keyboard-screensaver  -corners --+-
 exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
+#exec --no-startup-id pa-applet
+#exec --no-startup-id volumeicon
 
 # Color palette used for the terminal ( ~/.extend.Xresources file )
 # Colors are gathered based on the documentation:
@@ -359,6 +370,8 @@ bar {
 #	tray_output primary
 #	tray_output eDP1
 
+
+    bindsym button3 exec --no-startup-id rofi -show drun -config ~/.config/rofi.conf
 	bindsym button4 workspace prev
 	bindsym button5 workspace next
 	font xft:Font Awesome 11
@@ -467,3 +480,8 @@ bindsym XF86AudioPlay exec ~/bin/playerctl-cmus play-pause
 bindsym XF86AudioStop exec ~/bin/playerctl-cmus stop
 bindsym XF86AudioNext exec ~/bin/playerctl-cmus next
 bindsym XF86AudioPrev exec ~/bin/playerctl-cmus previous
+
+# Audio volume controls
+bindsym XF86AudioRaiseVolume exec amixer -q -D pulse sset Master 2%+ && pkill -RTMIN+1 i3blocks 
+bindsym XF86AudioLowerVolume exec amixer -q -D pulse sset Master 2%- && pkill -RTMIN+1 i3blocks
+bindsym XF86AudioMute exec amixer -q -D pulse sset Master toggle && pkill -RTMIN+1 i3blocks
