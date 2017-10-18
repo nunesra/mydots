@@ -2,13 +2,13 @@
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
 # Set mod key (Mod1=<Alt>, Mod4=<Super>)
-set $mod Mod1
+set $mod Mod4
 
 # set default desktop layout (default is tiling)
 # workspace_layout tabbed <stacking|tabbed>
 
 # Configure border style <normal|1pixel|pixel xx|none|pixel>
-new_window pixel 1
+new_window pixel 2
 new_float normal
 
 # Hide borders
@@ -16,7 +16,7 @@ hide_edge_borders none
 
 # change borders
 bindsym $mod+u border none
-bindsym $mod+y border pixel 1
+bindsym $mod+y border pixel 2
 bindsym $mod+n border normal
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -27,14 +27,15 @@ font xft:Noto Sans 10
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec terminal
+bindsym $mod+Return exec lxterminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
+bindsym Mod1+F4 kill
 
 # start program launcher
 bindsym $mod+d exec --no-startup-id dmenu_recency -b
-bindsym Mod4+space exec --no-startup-id rofi -show drun -config ~/.config/rofi.conf
+bindsym $mod+space exec --no-startup-id rofi -show drun -config ~/.config/rofi.conf
 #bindsym $mod+Shift+d exec --no-startup-id rofi -show run -config ~/.config/rofi.conf
 # launch categorized menu
 bindsym $mod+z exec --no-startup-id morc_menu
@@ -49,7 +50,6 @@ bindsym $mod+Ctrl+m exec pavucontrol
 # bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
 
 # Start Applications
-bindsym $mod+F2 exec firefox
 bindsym $mod+F3 exec pcmanfm
 bindsym $mod+Shift+F3 exec gksu pcmanfm
 bindsym $mod+t exec --no-startup-id pkill compton
@@ -109,7 +109,7 @@ bindsym $mod+e layout toggle split
 bindsym $mod+Shift+space floating toggle
 
 # change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
+# bindsym $mod+space focus mode_toggle
 
 # toggle sticky
 bindsym $mod+Shift+s sticky toggle
@@ -181,6 +181,7 @@ assign [class="Chromium"] $ws2
 #assign [class="Lollypop"] $ws3
 assign [class="Spotify"] $ws3
 assign [class="Gthumb"] $ws4
+assign [class="origin.exe"] $ws5
 
 # Open specific applications in floating mode
 #for_window [title="alsamixer"] floating enable border pixel 1
@@ -217,8 +218,9 @@ for_window [class="Simcity"] floating enable
 for_window [class="Blueberry.py"] floating enable
 for_window [class="Blueman-manager"] floating enable
 for_window [class="explorer.exe"] floating enable
-for_window [class="Origin.exe"] floating enable
+for_window [class="origin.exe"] floating enable
 for_window [class="Qpaeq"] floating enable
+#for_window [class="Gnome-calendar"] floating enable
 
 # to find the window class use xprop
 
@@ -238,7 +240,7 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 bindsym $mod+0 mode "$mode_system"
 set $mode_system (l)ock, (e)xit, switch_(u)ser, (Shift+s)uspend, (h)ibernate, (r)eboot, (s)hutdown
 mode "$mode_system" {
-    bindsym l exec --no-startup-id i3exit lock, mode "default"
+    bindsym l exec --no-startup-id xscreensaver-command -activate
     bindsym Shift+s exec --no-startup-id i3exit suspend, mode "default"
     bindsym u exec --no-startup-id i3exit switch_user, mode "default"
     bindsym e exec --no-startup-id i3exit logout, mode "default"
@@ -276,7 +278,8 @@ mode "resize" {
 }
 
 # Lock screen
-bindsym $mod+9 exec --no-startup-id blurlock
+#bindsym $mod+9 exec --no-startup-id blurlock
+bindsym $mod+9 exec --no-startup-id xscreensaver-command -activate
 
 # Autostart applications
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
@@ -288,7 +291,6 @@ exec --no-startup-id xfce4-power-manager
 exec --no-startup-id pamac-tray
 exec --no-startup-id clipit
 exec --no-startup-id blueman-applet
-#exec --no-startup-id blueman-applet
 #exec --no-startup-id blueberry-tray
 # exec_always --no-startup-id sbxkb
 #
@@ -297,7 +299,9 @@ exec --no-startup-id blueman-applet
 #exec --no-startup-id start_conky_maia
 # exec --no-startup-id start_conky_green
 #exec --no-startup-id xautolock -time 10 -locker blurlock
-exec --no-startup-id xautolock -time 20 -locker ~/bin/g610-keyboard-screensaver  -corners --+-
+#exec --no-startup-id xautolock -time 20 -locker ~/bin/g610-keyboard-screensaver  -corners --+-
+exec --no-startup-id xscreensaver -nosplash
+
 exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
 #exec --no-startup-id pa-applet
@@ -469,8 +473,8 @@ mode "$mode_gaps_outer" {
 #exec_always xcompmgr
 exec --no-startup-id /home/rnunes/bin/qpaeq-load-modules.sh
 exec_always --no-startup-id xrdb ~/.Xresources
-exec --no-startup-id kupfer --no-splash
-#exec --no-startup-id /home/rnunes/bin/g610-keyboard-daemon
+#exec --no-startup-id kupfer --no-splash
+exec --no-startup-id /home/rnunes/bin/g610-keyboard-screensaver
 #exec plank
 exec_always --no-startup-id numlockx
 exec_always --no-startup-id xset dpms 600
@@ -482,6 +486,6 @@ bindsym XF86AudioNext exec ~/bin/playerctl-cmus next
 bindsym XF86AudioPrev exec ~/bin/playerctl-cmus previous
 
 # Audio volume controls
-bindsym XF86AudioRaiseVolume exec amixer -q -D pulse sset Master 2%+ && pkill -RTMIN+1 i3blocks 
-bindsym XF86AudioLowerVolume exec amixer -q -D pulse sset Master 2%- && pkill -RTMIN+1 i3blocks
-bindsym XF86AudioMute exec amixer -q -D pulse sset Master toggle && pkill -RTMIN+1 i3blocks
+bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -q -D pulse sset Master 2%+ && pkill -RTMIN+1 i3blocks 
+bindsym XF86AudioLowerVolume exec --no-startup-id amixer -q -D pulse sset Master 2%- && pkill -RTMIN+1 i3blocks
+bindsym XF86AudioMute exec --no-startup-id amixer -q -D pulse sset Master toggle && pkill -RTMIN+1 i3blocks
