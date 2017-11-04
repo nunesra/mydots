@@ -35,8 +35,8 @@ bindsym Mod1+F4 kill
 
 # start program launcher
 bindsym $mod+d exec --no-startup-id dmenu_recency -b
-bindsym $mod+space exec --no-startup-id rofi -show drun -config ~/.config/rofi.conf
-#bindsym $mod+Shift+d exec --no-startup-id rofi -show run -config ~/.config/rofi.conf
+bindsym $mod+space exec --no-startup-id rofi -show drun
+#bindsym $mod+Shift+d exec --no-startup-id rofi -show run
 # launch categorized menu
 bindsym $mod+z exec --no-startup-id morc_menu
 
@@ -127,8 +127,8 @@ bindsym $mod+minus scratchpad show
 #navigate workspaces next / previous
 bindsym $mod+Ctrl+Right workspace next
 bindsym $mod+Ctrl+Left workspace prev
-bindsym $mod+Ctrl+Tab workspace next
-bindsym $mod+Ctrl+Shift+Tab workspace prev
+bindsym $mod+Tab workspace next
+bindsym $mod+Shift+Tab workspace prev
 
 # Workspace names
 # to display names or symbols instead of plain workspace numbers you can use
@@ -178,10 +178,13 @@ assign [title="Blizzard App"] $ws5
 assign [class="Geany"] $ws1
 assign [class="Firefox"] $ws2
 assign [class="Chromium"] $ws2
-#assign [class="Lollypop"] $ws3
+assign [class="Lollypop"] $ws3
 assign [class="Spotify"] $ws3
 assign [class="Gthumb"] $ws4
 assign [class="origin.exe"] $ws5
+
+for_window [class="Firefox"] focus
+for_window [class="Spotify"] focus
 
 # Open specific applications in floating mode
 #for_window [title="alsamixer"] floating enable border pixel 1
@@ -201,7 +204,7 @@ for_window [class="Oblogout"] fullscreen enable
 for_window [class="octopi"] floating enable
 for_window [title="About Pale Moon"] floating enable
 for_window [class="Pamac-manager"] floating enable
-for_window [class="Pavucontrol"] floating enable
+for_window [class="Pavucontrol"] floating enable border normal
 for_window [class="qt5ct"] floating enable sticky enable border normal
 for_window [class="Qtconfig-qt4"] floating enable sticky enable border normal
 #for_window [class="Simple-scan"] floating enable border normal
@@ -221,6 +224,7 @@ for_window [class="explorer.exe"] floating enable
 for_window [class="origin.exe"] floating enable
 for_window [class="Qpaeq"] floating enable
 #for_window [class="Gnome-calendar"] floating enable
+for_window [title="Calendar selection"] floating enable border pixel 2
 
 # to find the window class use xprop
 
@@ -375,7 +379,7 @@ bar {
 #	tray_output eDP1
 
 
-    bindsym button3 exec --no-startup-id rofi -show drun -config ~/.config/rofi.conf
+    bindsym button3 exec --no-startup-id rofi -show drun
 	bindsym button4 workspace prev
 	bindsym button5 workspace next
 	font xft:Font Awesome 11
@@ -478,6 +482,7 @@ exec --no-startup-id /home/rnunes/bin/g610-keyboard-screensaver
 #exec plank
 exec_always --no-startup-id numlockx
 exec_always --no-startup-id xset dpms 600
+exec --no-startup-id minidlnad -f ~/.config/minidlna.conf
 
 # Media player controls
 bindsym XF86AudioPlay exec ~/bin/playerctl-cmus play-pause
