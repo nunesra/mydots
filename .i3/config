@@ -225,6 +225,8 @@ for_window [class="origin.exe"] floating enable
 for_window [class="Qpaeq"] floating enable
 #for_window [class="Gnome-calendar"] floating enable
 for_window [title="Calendar selection"] floating enable border pixel 2
+for_window [class="openshot"] floating enable
+for_window [class="VidCutter"] floating enable
 
 # to find the window class use xprop
 
@@ -491,6 +493,6 @@ bindsym XF86AudioNext exec ~/bin/playerctl-cmus next
 bindsym XF86AudioPrev exec ~/bin/playerctl-cmus previous
 
 # Audio volume controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -q -D pulse sset Master 2%+ && pkill -RTMIN+1 i3blocks 
-bindsym XF86AudioLowerVolume exec --no-startup-id amixer -q -D pulse sset Master 2%- && pkill -RTMIN+1 i3blocks
+bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -q -D pulse sset Master 4%+ && pkill -RTMIN+1 i3blocks 
+bindsym XF86AudioLowerVolume exec --no-startup-id amixer -q -D pulse sset Master 4%- && pkill -RTMIN+1 i3blocks
 bindsym XF86AudioMute exec --no-startup-id amixer -q -D pulse sset Master toggle && pkill -RTMIN+1 i3blocks
