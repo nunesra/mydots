@@ -359,12 +359,21 @@ set_from_resource $term_color15    color15
 # https://i3wm.org/dovs/userguide.html#variables
 # Changing the value of one of the variables will
 # effect all the areas with the same color.
-set $i3_background      #2B2C2B
+#
+#Maia Dark
+#set $i3_background      #2B2C2B
+#set $i3_color3          #353836
+#set $i3_color2          #595B5B
+#set $i3_color1          #f9faf9
+#
+#Flatix Dark
+set $i3_background      #444444
+set $i3_color3          #444444
+set $i3_color2          #444444
+set $i3_color1          #444444
+#
 set $i3_text            #F9FAF9
 set $i3_separator       #454947
-set $i3_color1          #f9faf9
-set $i3_color2          #595B5B
-set $i3_color3          #353836
 set $i3_color4          #16A085
 set $i3_color5          #FDF6E3
 set $i3_color6          #EEE8D5
@@ -434,8 +443,8 @@ client.background       $i3_background
 #############################
 
 # Set inner/outer gaps
-gaps inner 10
-gaps outer -4
+#gaps inner 10
+#gaps outer -4
 
 # Additionally, you can issue commands with the following syntax. This is useful to bind keys to changing the gap size.
 # gaps inner|outer current|all set|plus|minus <px>
