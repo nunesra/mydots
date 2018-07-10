@@ -227,7 +227,7 @@ for_window [class="Blueberry.py"] floating enable
 for_window [class="Blueman-manager"] floating enable
 for_window [class="explorer.exe"] floating enable
 for_window [class="origin.exe"] floating enable
-for_window [class="Qpaeq"] floating enable
+for_window [class="qpaeq"] floating enable
 #for_window [class="Gnome-calendar"] floating enable
 for_window [title="Calendar selection"] floating enable border pixel 2
 #for_window [class="openshot"] floating enable border normal
@@ -302,7 +302,7 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id nitrogen --restore; sleep 1; compton -b --backend xrender
 #exec --no-startup-id nitrogen --restore
 #exec --no-startup-id manjaro-hello
-#exec --no-startup-id nm-applet
+exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id pamac-tray
 #exec --no-startup-id clipit
@@ -507,6 +507,7 @@ exec --no-startup-id g610-led -a 66
 exec_always --no-startup-id numlockx
 exec_always --no-startup-id xset dpms 600
 exec --no-startup-id minidlnad -f ~/.config/minidlna.conf
+exec --no-startup-id transmission-gtk --minimized
 
 # Media player controls
 bindsym XF86AudioPlay exec ~/bin/playerctl-cmus play-pause
