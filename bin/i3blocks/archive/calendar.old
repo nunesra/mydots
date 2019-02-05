@@ -1,0 +1,26 @@
+#!/bin/bash
+
+function main() {
+	if [ -n "${BLOCK_BUTTON}" ]; then
+		if [ $BLOCK_BUTTON = '1' ]; then
+			menu 
+		fi
+	fi
+
+	date "+%d-%b %H:%M"
+}
+
+function menu() {
+	ROFI_TEXT=""
+	ROFI_OPTIONS="-width -25 -location 3 -hide-scrollbar -bw 2 -yoffset 20"
+	# prepare menu items
+	menu_items=""
+	cal=$(cal)
+	echo "${cal}"
+	menu_items=$(cal | awk '{printf "%s\\n",$0}')
+	# launch rofi and get selection
+	LINES=$(echo -e -n $menu_items | wc -l)
+	selection=$(echo -e -n "${menu_items}" | rofi -dmenu -font "Dejavu Sans Mono 12" -lines $LINES -p "$ROFI_TEXT" $ROFI_OPTIONS)
+}
+	
+main "$@"

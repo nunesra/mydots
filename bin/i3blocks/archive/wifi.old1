@@ -1,0 +1,110 @@
+#!/bin/bash
+
+function main() {
+	
+	if [ -n "${BLOCK_BUTTON}" ]; then
+		if [ $BLOCK_BUTTON = '1' ]; then
+			menu 
+		fi
+	fi
+
+	wifi_status=$(nmcli device wifi list | grep '^\*' | awk '{print $2}')
+	if [ -z "${wifi_status}" ]; then
+	    echo -n "off"
+	else
+		echo -n $wifi_status
+	fi
+}
+
+function menu() {
+	ROFI_TEXT=""
+	ROFI_OPTIONS="-width -43 -location 3 -hide-scrollbar -bw 2 -yoffset 20"
+	# prepare menu items
+	dis_wifi="Disable wifi"
+	ena_wifi="Enable wifi"
+	con_edit="Connection Editor"
+	rescan="Scan wifi"
+    menu_items=""
+	radio=$(nmcli radio wifi)
+	if [ $radio = 'enabled' ]; then
+		menu_items="$menu_items""$dis_wifi\n"
+	else
+		menu_items="$menu_items""$ena_wifi\n"
+	fi
+	menu_items="${menu_items}""${con_edit}\n"
+	menu_items="${menu_items}""${rescan}\n"
+
+	device_list=$(nmcli -t device wifi list)
+	device_list_formatted=$(echo -n "${device_list}" | awk -F ":" 'BEGIN{i = 0}{printf "%-2d%-2s%-30s%4s\\n",i,$1,$2,$7; i++}') 
+	menu_items="${menu_items}""${device_list_formatted}"
+    IFS=$'\n' read -d '' -r -a connections <<< "$device_list"
+
+	# launch rofi and get selection
+	LINES=$(echo -e -n $menu_items | wc -l)
+	selection=$(echo -e -n "${menu_items}" | rofi -dmenu -font "Dejavu Sans Mono 12" -lines $LINES -p "$ROFI_TEXT" $ROFI_OPTIONS)
+
+	# execute selection
+	if [ "$selection" == "$dis_wifi" ]; then
+		wifi_status=$(nmcli radio wifi off)
+	elif [ "$selection" == "$ena_wifi" ]; then
+		wifi_status=$(nmcli radio wifi on)
+	elif [ "$selection" == "$con_edit" ]; then
+		nm-connection-editor
+	elif [ "$selection" == "$rescan" ]; then
+		nmcli device wifi rescan
+	elif [ "$selection" == "" ]; then
+		return
+	else
+		show_connection_info "$selection"
+	fi
+}
+
+function show_connection_info() {
+	# sleep 0.5
+
+	ROFI_TEXT=""
+	ROFI_OPTIONS="-width -60 -location 3 -hide-scrollbar -bw 2 -yoffset 20"
+
+	# prepare menu items
+    menu_items=""
+
+	# extract connection from selection
+    read -r -a array <<< "$1"
+    connection=${array[0]}
+
+	# extract connection id from connections(device_list)
+	IFS=':' read -r -a array <<< "${connections[$connection]}"
+	connection_id="${array[1]}"
+
+	connected="${array[0]}"
+
+	if [ "$connected" == "*" ]; then
+		
+		menu_items="${menu_items}""${selection}\n"
+	
+		# get connection info from nmcli for the connection_id
+		connection_info=$(nmcli -t connection show ${connection_id} | grep IP4)
+		IFS=$'\n' read -d '' -r -a array <<< "$connection_info"
+		for row in "${array[@]}"; do
+			menu_items="${menu_items}""${row}\\n"
+		done 
+	
+		# launch rofi and get selection
+		LINES=$(echo -e -n $menu_items | wc -l)
+		selection=$(echo -e -n "${menu_items}" | rofi -dmenu -font "Dejavu Sans Mono 12" -lines $LINES -p "$ROFI_TEXT" $ROFI_OPTIONS)
+
+	else
+		if zenity --width=300 --question --text="Connect to $connection_id ?"; then
+			result=$(nmcli -t connection show | grep -c "${connection_id}")
+			if [ $result = 0 ]; then
+				password=$(zenity --width=300 --title="Connect to $connection_id" --entry --text="Entre com a senha da conexão:")
+				result=$((nmcli device wifi connect $connection_id password $password) 2>&1)
+				zenity --width=300 --title="Result" --info --text="${result}"
+			else
+				result=$(nmcli connection up "${connection_id}"|zenity --text="Connecting to $connection_id" --progress --pulsate --auto-close)
+			fi
+		fi
+	fi			
+}
+
+main "$@"

@@ -16,8 +16,8 @@ general {
 
 #order += "cpu_usage"
 #order += "load"
-#order += "disk /"
-#order += "disk /home/users_data"
+order += "disk /"
+order += "disk /home/users_data"
 #order += "wireless _first_"
 #order += "ethernet _first_"
 #order += "battery all"

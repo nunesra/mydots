@@ -8,12 +8,15 @@ set $mod Mod4
 # workspace_layout tabbed <stacking|tabbed>
 
 # Configure border style <normal|1pixel|pixel xx|none|pixel>
-#new_window pixel 4
-new_window none
+new_window pixel 1
+#new_window none
 new_float normal
 
 # Hide borders
 hide_edge_borders none
+
+# Default border
+default_border none
 
 # change borders
 bindsym $mod+u border none
@@ -29,8 +32,8 @@ floating_modifier $mod
 
 # start a terminal
 #bindsym $mod+Return exec urxvt
-bindsym $mod+Return exec termite
-#bindsym $mod+Return exec lxterminal
+#bindsym $mod+Return exec termite
+bindsym $mod+Return exec lxterminal
 # kill focused window
 bindsym $mod+Shift+q kill
 bindsym Mod1+F4 kill
@@ -178,6 +181,7 @@ bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
 
 # Open applications on specific workspaces
 assign [title="Blizzard App"] $ws5
+assign [title="Android Studio"] $ws5
 assign [class="Geany"] $ws1
 assign [class="Firefox"] $ws2
 assign [class="Chromium"] $ws2
@@ -209,6 +213,8 @@ for_window [class="Oblogout"] fullscreen enable
 for_window [class="octopi"] floating enable
 for_window [title="About Pale Moon"] floating enable
 for_window [class="Pamac-manager"] floating enable
+for_window [class="pamac-manager"] floating enable
+for_window [class="Pamac-updater"] floating enable
 for_window [class="Pavucontrol"] floating enable border normal
 for_window [class="qt5ct"] floating enable sticky enable border normal
 for_window [class="Qtconfig-qt4"] floating enable sticky enable border normal
@@ -227,7 +233,7 @@ for_window [class="Blueberry.py"] floating enable
 for_window [class="Blueman-manager"] floating enable
 for_window [class="explorer.exe"] floating enable
 for_window [class="origin.exe"] floating enable
-for_window [class="qpaeq"] floating enable
+for_window [class="qpaeq"] floating enable border normal
 #for_window [class="Gnome-calendar"] floating enable
 for_window [title="Calendar selection"] floating enable border pixel 2
 #for_window [class="openshot"] floating enable border normal
@@ -236,6 +242,7 @@ for_window [class="Nm-connection-editor"] floating enable sticky enable border n
 for_window [class="Yad"] floating enable
 for_window [class="mainwindow.py"] floating enable
 for_window [class="Mainwindow.py"] floating enable
+for_window [class="Gnome-disks"] floating enable
 
 # to find the window class use xprop
 
@@ -306,9 +313,9 @@ exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id pamac-tray
 #exec --no-startup-id clipit
-exec --no-startup-id parcellite
-exec --no-startup-id blueman-applet
-#exec --no-startup-id blueberry-tray
+#exec --no-startup-id parcellite
+#exec --no-startup-id blueman-applet
+exec --no-startup-id blueberry-tray
 # exec_always --no-startup-id sbxkb
 #
 # use default .config/conky/conky.conf
@@ -393,6 +400,7 @@ set $i3_color17         #0c0c0c
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
 
 bar {
+	i3bar_command i3bar -t
 	status_command i3blocks -c ~/.config/i3blocks.conf
 #	status_command i3status
 	position top
@@ -508,6 +516,7 @@ exec_always --no-startup-id numlockx
 exec_always --no-startup-id xset dpms 600
 exec --no-startup-id minidlnad -f ~/.config/minidlna.conf
 exec --no-startup-id transmission-gtk --minimized
+exec --no-startup-id ~/bin/i3_start
 
 # Media player controls
 bindsym XF86AudioPlay exec ~/bin/playerctl-cmus play-pause

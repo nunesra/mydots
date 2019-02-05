@@ -1,0 +1,13 @@
+#!/usr/bin/perl
+use Env qw(BLOCK_INSTANCE);
+
+if ($ENV{'BLOCK_BUTTON'} == 4) {
+    system("~/bin/bright.sh -u");
+} elsif ($ENV{'BLOCK_BUTTON'} == 5) {
+    system("~/bin/bright.sh -d");
+} elsif ($ENV{'BLOCK_BUTTON'} == 1) {
+    system("~/bin/bright.sh -i > /dev/null");
+} elsif ($ENV{'BLOCK_BUTTON'} == 2) {
+    system("~/bin/bright.sh -m");
+}
+system("~/bin/bright.sh -v");

@@ -1,0 +1,14 @@
+#!/bin/bash
+#screen width
+xaxis=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f1)
+#screen height
+yaxis=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f2)
+
+zenity --calendar&
+
+window=`xdotool search --sync --onlyvisible --name "Calendar selection"`
+eval $(xdotool getwindowgeometry --shell $window|grep WIDTH=)
+
+x=$(($xaxis - $WIDTH - 10)) 
+
+xdotool getactivewindow windowmove $x 30

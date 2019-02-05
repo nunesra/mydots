@@ -3,12 +3,12 @@ configuration {
 	width: 20;
 	lines: 10;
 /*	columns: 1;*/
-	font: "Awesome 14";
+	font: "Awesome 12";
 /*	bw: 1;*/
 	location: 1;
 /*	padding: 5;*/
-	yoffset: 25;
-/*	xoffset: 0;*/
+	yoffset: 22;
+	xoffset: 0;
 /*	fixed-num-lines: true;*/
 	show-icons: true;
 /*	terminal: "rofi-sensible-terminal";*/
@@ -23,7 +23,7 @@ configuration {
 /*	sort: false;*/
 /*	levenshtein-sort: false;*/
 /*	case-sensitive: false;*/
-/*	cycle: true;*/
+	cycle: false;
 /*	sidebar-mode: false;*/
 /*	eh: 1;*/
 /*	auto-select: false;*/
@@ -34,7 +34,7 @@ configuration {
 /*	tokenize: true;*/
 /*	m: "-5";*/
 /*	line-margin: 2;*/
-/*	line-padding: 1;*/
+	line-padding: 10;
 /*	filter: ;*/
 /*	separator-style: "dash";*/
 /*	hide-scrollbar: false;*/
@@ -59,7 +59,7 @@ configuration {
 /*	display-windowcd: ;*/
 /*	display-run: ;*/
 /*	display-ssh: ;*/
-/*	display-drun: ;*/
+	display-drun: "drun: ";
 /*	display-combi: ;*/
 /*	display-keys: ;*/
 /*	kb-primary-paste: "Control+V,Shift+Insert";*/
@@ -131,6 +131,6 @@ configuration {
 /*	ml-row-up: "Mouse4";*/
 /*	ml-row-down: "Mouse5";*/
 /*	me-select-entry: "Mouse1";*/
-/*	me-accept-entry: "MouseD1";*/
+	me-accept-entry: "MouseDPrimary";
 /*	me-accept-custom: "Control+MouseD1";*/
 }

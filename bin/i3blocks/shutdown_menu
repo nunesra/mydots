@@ -1,0 +1,65 @@
+#!/bin/bash
+
+function main() {
+    if [ -n "${BLOCK_BUTTON}" ]; then
+        if [ $BLOCK_BUTTON = '1' ]; then
+            menu 
+        fi  
+    fi  
+}
+
+function menu() {
+    ROFI_TEXT=""
+    ROFI_OPTIONS="-width -15 -location 3 -hide-scrollbar -bw 2 -yoffset 20"
+    # prepare menu items
+	shutdown="Shutdown"
+	reboot="Reboot"
+	hibernate="Hibernate"
+	halt="Halt"
+	lock="Lock"
+	logout="Logout"
+	menu_items="$shutdown\n$reboot\n$hibernate\n$halt\n$lock\n$logout\n"
+
+     # launch rofi and get selection
+    LINES=$(echo -e -n $menu_items | wc -l)
+    selection=$(echo -e -n "${menu_items}" | rofi -dmenu -font "Dejavu Sans Mono 12" -lines $LINES -p "$ROFI_TEXT" $ROFI_OPTIONS)
+
+	if [ "$selection" == "" ]; then
+		exit
+	elif [ "$selection" == "$lock" ]; then 
+		screen_lock
+		exit
+	fi
+
+	if zenity --question --text="$selection"; then
+	    # execute selection
+		if [ "$selection" == "$shutdown" ]; then
+			systemctl poweroff
+		elif [ "$selection" == "$reboot" ]; then
+			systemctl reboot
+		elif [ "$selection" == "$hibernate" ]; then
+			systemctl hibernate
+		elif [ "$selection" == "$halt" ]; then
+			systemctl halt
+		elif [ "$selection" == "$logout" ]; then
+			i3-msg exit
+		fi  
+	else
+		exit
+	fi
+}
+
+function screen_lock() {
+	sleep 1
+	g610-led -a 00
+	# take screenshot
+	import -window root /tmp/screenshot.png
+	# blur it
+	convert /tmp/screenshot.png -blur 0x5 /tmp/screenshotblur.png
+	rm /tmp/screenshot.png
+	# lock the screen
+	result=$(i3-msg exec 'i3lock -i /tmp/screenshotblur.png')
+	g610-led -a 66
+}
+
+main "$@"

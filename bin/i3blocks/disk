@@ -1,0 +1,38 @@
+#!/bin/bash
+
+DIR="${BLOCK_INSTANCE}"
+ALERT_LOW="${1:-10}" # color will turn red under this value (default: 10%)
+BLOCK_BUTTON="${BLOCK_BUTTON}"
+
+if [ $BLOCK_BUTTON = '1' ]; then
+#	i3-msg -q exec "pcmanfm -n $DIR"
+#	i3-msg -q exec "nautilus -w $DIR"
+ 	i3-msg -q exec "nemo -n $DIR"
+elif [ $BLOCK_BUTTON = '3' ]; then
+	gnome-system-monitor -f
+fi
+
+df -h -P -l "$DIR" | awk -v alert_low=$ALERT_LOW \
+'
+/\/.*/ {
+	# full text
+	print $4
+
+	# short text
+	print $4
+
+	use=$5
+
+	# no need to continue parsing
+	exit 0
+}
+
+END {
+	gsub(/%$/,"",use)
+	if (100 - use < alert_low) {
+		# color
+		print "#FF0000"
+	}
+}
+'
+exit

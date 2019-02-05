@@ -1,0 +1,51 @@
+#!/bin/bash
+
+function main() {
+	if [ -n "${BLOCK_BUTTON}" ]; then
+		if [ $BLOCK_BUTTON = '1' ]; then
+			menu 
+		fi
+	fi
+
+	wifi_status=$(nmcli device wifi list | grep '^\*' | awk '{print $2}')
+	if [ -z "${wifi_status}" ]; then
+	    echo -n "off"
+	else
+		echo -n $wifi_status
+	fi
+}
+
+function menu() {
+	ROFI_TEXT=""
+	ROFI_OPTIONS="-width -40 -location 3 -hide-scrollbar -bw 2 -yoffset 20"
+	# prepare menu items
+	dis_wifi="Disable wifi"
+	ena_wifi="Enable wifi"
+	con_edit="Launch Connection Editor"
+    menu_items = ""
+	radio=$(nmcli radio wifi)
+	if [ $radio = 'enabled' ]; then
+		menu_items="$menu_items""$dis_wifi\n"
+	else
+		menu_items="$menu_items""$ena_wifi\n"
+	fi
+	menu_items="${menu_items}""${con_edit}\n"
+
+	device_list=$(nmcli -t device wifi list | awk -F ":" '{printf "%-2s%-30s%4s\\n",$1,$2,$7}') 
+	menu_items="${menu_items}""${device_list}"
+
+	# launch rofi and get selection
+	LINES=$(echo -e -n $menu_items | wc -l)
+	selection=$(echo -e -n "${menu_items}" | rofi -dmenu -font "Dejavu Sans Mono 12" -lines $LINES -p "$ROFI_TEXT" $ROFI_OPTIONS)
+
+	# execute selection
+	if [ "$selection" == "$dis_wifi" ]; then
+		wifi_status=$(nmcli radio wifi off)
+	elif [ "$selection" == "$ena_wifi" ]; then
+		wifi_status=$(nmcli radio wifi on)
+	elif [ "$selection" == "$con_edit" ]; then
+		nm-connection-editor
+	fi
+}
+	
+main "$@"

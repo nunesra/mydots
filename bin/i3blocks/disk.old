@@ -1,0 +1,47 @@
+#!/bin/perl
+# Copyright (C) 2014 Julien Bonjean <julien@bonjean.info>
+use Env qw(BLOCK_INSTANCE);
+
+$button = $ENV{'BLOCK_BUTTON'};
+$dir = $ENV{'BLOCK_INSTANCE'};
+print ($dir);
+print (".");
+print ($button);
+
+exit 0;
+=for comment
+DIR="${BLOCK_INSTANCE:-$HOME}"
+ALERT_LOW="${1:-10}" # color will turn red under this value (default: 10%)
+BLOCK_BUTTON="${BLOCK_BUTTON}"
+echo $BLOCK_BUTTON
+
+exit
+if ($ENV{'BLOCK_BUTTON'} == 1) {
+    system("pcmanfm -n $DIR");
+} elsif ($ENV{'BLOCK_BUTTON'} == 3) {
+    system("pcmanfm -n $DIR");
+}
+
+df -h -P -l "$DIR" | awk -v alert_low=$ALERT_LOW '
+/\/.*/ {
+	# full text
+	print $4
+
+	# short text
+	print $4
+
+	use=$5
+
+	# no need to continue parsing
+	exit 0
+}
+
+END {
+	gsub(/%$/,"",use)
+	if (100 - use < alert_low) {
+		# color
+		print "#FF0000"
+	}
+}
+'
+=cut
