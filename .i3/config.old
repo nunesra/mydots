@@ -315,8 +315,8 @@ exec --no-startup-id xfce4-power-manager
 exec --no-startup-id pamac-tray
 #exec --no-startup-id clipit
 #exec --no-startup-id parcellite
-exec --no-startup-id blueman-applet
-#exec --no-startup-id blueberry-tray
+#exec --no-startup-id blueman-applet
+exec --no-startup-id blueberry-tray
 # exec_always --no-startup-id sbxkb
 #
 # use default .config/conky/conky.conf
@@ -376,22 +376,10 @@ set_from_resource $term_color15    color15
 #set $i3_color1          #f9faf9
 #
 #Flatix Dark
-#set $i3_background      #141A1B
-#set $i3_color3          #141A1B
-#set $i3_color2          #141A1B
-#set $i3_color1          #141A1B
-#
-#Ultimate Dark
-#set $i3_background      #444444
-#set $i3_color3          #444444
-#set $i3_color2          #444444
-#set $i3_color1          #444444
-#
-# Black
-set $i3_background      #000000
-set $i3_color3          #000000
-set $i3_color2          #000000
-set $i3_color1          #000000
+set $i3_background      #444444
+set $i3_color3          #444444
+set $i3_color2          #444444
+set $i3_color1          #444444
 #
 set $i3_text            #F9FAF9
 set $i3_separator       #454947

@@ -62,8 +62,8 @@
     "percent": 0.5,
     "swallows": [
        {
-        "class": "^Nemo$",
-        "instance": "^nemo$"
+        "class": "^Pcmanfm$",
+        "instance": "^pcmanfm$"
        }
     ],
     "type": "con"
